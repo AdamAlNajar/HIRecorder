@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello! Screen Recorder - ALPHA 2</title>
+    <style>
+           body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #headerContainer {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        #headerText {
+            font-size: 24px;
+            color: #333;
+            margin-top: 45px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        #startButton {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        video {
+            width: 80%;
+            max-width: 1920px;
+            height: auto;
+            margin-top: 20px;
+            margin-bottom: 20px; /* Add margin bottom to create space */
+        }
+    </style>
+</head>
+<body>
+    <div id="headerText">HIRecorder - Now with system audio! |
+        Alpha Build 2
+    </div>
+    <video width="1920" height="1080" controls></video>
+    <button id="startButton">Start Recording</button>
+    <script>
+        const start=async()=>{
+            const stream = await navigator.mediaDevices.getDisplayMedia({
+                video: {
+                mediaSource: "screen",
+                width: { ideal: 1920 },
+                height: { ideal: 1080 },
+                frameRate: { ideal: 400 }
+            },
+            audio: {
+                echoCancellation: true, // Enable echo cancellation
+                noiseSuppression: false, // Disable noise suppression
+                autoGainControl: true, // Enable automatic gain control
+                sampleRate: 44100, // Set the audio sampling rate (Hz)
+                channelCount: 2, // Set the number of audio channels (2 for stereo)
+                volume: 1.0 // Adjust the audio volume
+            }
+                });
+            const data = [];
+
+            const mediaRecorder = new MediaRecorder(stream)
+
+            mediaRecorder.ondataavailable=(e)=>{
+                data.push(e.data);
+            }
+            mediaRecorder.start()
+
+            mediaRecorder.onstop = (e) => {
+                    const videoBlob = new Blob(data, {
+                        type: 'video/mkv;codecs=vp9' // Specify preferred video codec
+                    });
+                    document.querySelector("video").src = URL.createObjectURL(videoBlob);
+            };
+        }
+        start()
+        document.getElementById("startButton").addEventListener("click", start);
+    </script>
+</body>
+</html>
