@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+button {
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+
+    cursor: pointer;
+}
+
+body {
+    background-color: #eee;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 2rem;
+}
+
+.mic-toggle{
+    position: relative;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    background-color: crimson;
+    margin-bottom: 4rem;
+}
+
+.mic-toggle:after,
+.mic-toggle:before{
+    --pad : 0rem;
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 0;
+    background-color: rgba(220, 20, 60, .2);
+    top: var(--pad);
+    left: var(--pad);
+    right: var(--pad);
+    bottom: var(--pad);
+    border-radius: 50%;
+}
+
+.mic-toggle:after{
+    transition: .4s;
+}
