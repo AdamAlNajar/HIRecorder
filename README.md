@@ -1,3 +1,6 @@
+### NOTE :
+- This Project has been archived and is no longer getting updates, if you still wish to use it be careful with what you do. 
+
 # Why?
 - i made this because, for me OBS is too clunky and weird.
 
